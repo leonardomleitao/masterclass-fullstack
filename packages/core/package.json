@@ -1,0 +1,26 @@
+{
+  "name": "@taskmaster/core",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsup src/index.ts --dts --watch",
+    "build": "tsup src/index.ts --dts --minify",
+    "test": "jest --watchAll --collectCoverage"
+  },
+  "devDependencies": {
+    "@taskmaster/eslint-config": "*",
+    "@taskmaster/typescript-config": "*",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.15.3",
+    "@types/uuid": "^8.3.2",
+    "eslint": "^9.34.0",
+    "jest": "^30.2.0",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "tsup": "^8.5.0",
+    "uuid": "^8.3.2"
+  }
+}

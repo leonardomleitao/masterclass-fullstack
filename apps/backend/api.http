@@ -1,0 +1,34 @@
+### ---------------------- AUTH ----------------------
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Usuario Padrão",
+  "email": "usuario@formacao.dev",
+  "password": "#Senha123"
+}
+
+###
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "usuario@exemplo.com",
+  "password": "#Senha123"
+}
+
+
+### ---------------------- TASKS ----------------------
+GET http://localhost:4000/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0ZGRjZmE1LWYyOTctNDZiOS05ZWU2LTk5YzkyNTI3NTczZCIsImVtYWlsIjoidXN1YXJpb0BleGVtcGxvLmNvbSIsIm5hbWUiOiJVc3VhcmlvIFBhZHLDo28iLCJpYXQiOjE3NjMxMjYwMzQsImV4cCI6MTc2NDQyMjAzNH0.aupU-VcbJEFfs2GLREw-jz-au0SiRvRKLvfDQE-GdYI
+
+
+###
+POST http://localhost:4000/task
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0ZGRjZmE1LWYyOTctNDZiOS05ZWU2LTk5YzkyNTI3NTczZCIsImVtYWlsIjoidXN1YXJpb0BleGVtcGxvLmNvbSIsIm5hbWUiOiJVc3VhcmlvIFBhZHLDo28iLCJpYXQiOjE3NjMxMjYwMzQsImV4cCI6MTc2NDQyMjAzNH0.aupU-VcbJEFfs2GLREw-jz-au0SiRvRKLvfDQE-GdYI
+
+{
+  "title": "New Task",
+  "priority": 2
+}

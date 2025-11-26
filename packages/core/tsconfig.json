@@ -1,0 +1,12 @@
+{
+  "extends": "@taskmaster/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src",
+    "test/shared/person-name.vo.test.ts",
+    "test/shared/id.vo.spec.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,12 @@
+{
+  "material-icon-theme.folders.associations": {
+    "backend-java": "java",
+    "backend-go": "server",
+    "backend-ts": "typescript",
+    "mobile-flutter": "flutter",
+    "mobile-native": "react-components",
+    "web-angular": "angular",
+    "web-react": "react-components",
+    "web-vue": "vue",
+  }
+}
