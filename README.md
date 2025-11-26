@@ -1,135 +1,150 @@
-# Turborepo starter
+# TaskMaster
 
-This Turborepo starter is maintained by the Turborepo core team.
+TaskMaster é um template de aplicação fullstack voltado para estudos de **arquitetura**, **DDD** e **separação de regras de negócio**.  
+O projeto é um **monorepo com Turborepo** que contém:
 
-## Using this example
+- **Backend** – API em **Next.js** (Route Handlers / server)
+- **Web** – aplicação web em **Next.js**
+- **Mobile** – aplicação mobile em **React Native**
+- **Core** – núcleo de regras de negócio e testes (Domain-Driven Design + Clean Architecture)
+- **db** – pasta de banco de dados compartilhado (dentro de `apps/db`)
 
-Run the following command:
+O foco não é só “fazer funcionar”, mas mostrar **como organizar bem o domínio**, com **entidades ricas**, **objetos de valor**, **casos de uso** e **inversão de dependência**.
 
-```sh
-npx create-turbo@latest
+---
+
+## Funcionalidades do template
+
+O template já inclui o fluxo básico de conta de usuário:
+
+- Criação de conta (registro)
+- Autenticação (login)
+- Edição de dados de usuário (ex.: alteração de nome de usuário)
+
+Essas funcionalidades são implementadas usando o **Core compartilhado**, consumido por:
+
+- Backend (API)
+- Web (interface web)
+- Mobile (aplicativo React Native)
+
+---
+
+## Tecnologias utilizadas
+
+- **Monorepo & Build**
+  - [Turborepo](https://turbo.build/)
+- **Backend**
+  - [Nest.js](https://nestjs.com/)
+  - [Prisma](https://www.prisma.io/) (ORM)
+- **Web**
+  - [Next.js](https://nextjs.org/)
+- **Mobile**
+  - [React Native](https://reactnative.dev/)
+- **Domínio & Arquitetura**
+  - Domain-Driven Design (DDD)
+  - Clean Architecture
+  - Inversão de dependência (camadas de aplicação dependem do Core, e não o contrário)
+- **Testes**
+  - Testes unitários no Core com **100% de cobertura**
+
+---
+
+## Estrutura geral do monorepo
+
+Visão simplificada:
+
+```txt
+.
+├── apps
+│   ├── backend      # API em Nest.js
+│   ├── web          # Frontend web em Next.js
+│   ├── mobile       # App mobile em React Native
+│   └── db           # Banco de dados compartilhado
+└── packages
+    └── core         # Núcleo de domínio, casos de uso e testes unitários
 ```
 
-## What's inside?
+## Setup do ambiente
 
-This Turborepo includes the following packages/apps:
+1. **Instalar dependências na raiz do monorepo**
 
-### Apps and Packages
+Na raiz do projeto, instale as dependências:
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@taskmaster/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@taskmaster/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@taskmaster/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+npm install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+2. **Configurar variáveis de ambiente (.env)**
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+Cada app possui um arquivo `.env.example`.
+Basta copiar/renomear para `.env`
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+> ⚠️ O conteúdo padrão já funciona em desenvolvimento
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+cp apps/backend/.env.example apps/backend/.env
+cp apps/web/.env.example apps/web/.env
+cp apps/mobile/.env.example apps/mobile/.env
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+> ⚠️ Você não precisa alterar nada dentro desses arquivos para rodar o projeto em modo de desenvolvimento.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+3. **Gerar Prisma Client e rodar migrations (Backend)**
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+Entre na pasta do backend e rode o comando do Prisma:
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+cd apps/backend
+npx prisma migrate dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Isso vai:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+- Aplicar as migrations do banco de dados;
+- Gerar o Prisma Client usado pelo backend.
 
+4. **Rodar o projeto**
+
+De volta à raiz do monorepo, execute:
+
+```bash
+npm run dev
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+> Ajuste o comando acima se o monorepo usar outro script para iniciar todas as apps (por exemplo, `turbo dev`).
+
+---
+
+### Observação sobre o app Mobile
+
+Para rodar o app mobile, é necessário ajustar o script `dev` no `package.json` do projeto mobile:
+
+1. Abra `apps/mobile/package.json`.
+2. Localize o script de desenvolvimento que está como "\_dev".
+3. Renomeie/ajuste para que o script `dev` seja o alvo correto, por exemplo:
+
+```jsonc
+{
+  "scripts": {
+    "dev": "expo start --ios", // para iOS
+    // "dev": "expo start --android" // para Android
+  },
+}
 ```
 
-## Useful Links
+4. Se quiser rodar no **Android**, basta trocar o comando do script `dev` para apontar para o Android:
 
-Learn more about the power of Turborepo:
+```jsonc
+{
+  "scripts": {
+    "dev": "expo start --android",
+  },
+}
+```
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+Depois disso, para iniciar somente o app mobile:
+
+```bash
+cd apps/mobile
+npm run dev
+```
